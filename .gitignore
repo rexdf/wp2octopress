@@ -1,0 +1,16 @@
+*.py[co]
+*.log
+
+; Python packaging
+bin
+build
+dist
+sdist
+MANIFEST
+*.egg-info
+
+; Wordpress exported data
+*.xml
+
+; Generated files
+out/*
