@@ -583,7 +583,7 @@ def dump_item(data):
     value = pdata.get(field, None)
     pdata[field] = value and parse_date(value, format, None)
 
-    # Post title
+    # Post title 
     transf = CConvert()
     name = data.get('title', '').strip()
     field = FIELD_MAP.get('title', 'title')
