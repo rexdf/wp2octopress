@@ -605,6 +605,7 @@ def dump(file_name, data, order):
                     else:
                         value = data[field] or ''
                     if(str_t(field)=="title"):
+                        value = value.replace('"',"\\\"")
                         value = "\"" + value + "\""
                     if(str_t(field)=="status"):
                         field = "comments"
@@ -627,7 +628,8 @@ def dump(file_name, data, order):
                     content = fix_urls(html2md(content))
 
                 if 'title' in data:
-                    content = str_t("# %s\n\n%s") % (data['title'], content)
+                    #content = str_t("# %s\n\n%s") % (data['title'], content)
+                    content = str_t("%s") % (content)
 
                 comments = generate_comments(extras.get('comments', []))
                 extras = filter(None, [excerpt, content, comments])
