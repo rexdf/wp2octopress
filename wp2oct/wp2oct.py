@@ -399,7 +399,7 @@ def get_path(item_type, file_name=None, data=None):
     path generation.
 
     Arguments:
-        item_type -- 'post' or 'page'
+        item_type -- 'post' or 'page'romkan.to_roma(transf.convert('汉字'))
         file_name -- explicitly defined correct file name.
         data -- preprocessed RSS item data dictionary."""
 
@@ -564,7 +564,7 @@ def dump_item(data):
         return
 
     item_type = data['post_type']
-    if item_type not in ['post', 'page', 'draft']:
+    if item_type not in ['post', 'page', 'draft', 'private']:
         return
 
     fields = WHAT2SAVE['item']
@@ -583,6 +583,13 @@ def dump_item(data):
     value = pdata.get(field, None)
     pdata[field] = value and parse_date(value, format, None)
 
+    # Post title
+    transf = CConvert()
+    name = romkan.to_roma(transf.convert(data.get('title', '').strip()))
+    field = FIELD_MAP.get('title', 'title')
+    pdata[field] = name or data.get('post_id', UNTITLED)
+
+    
     dump_path = get_path(item_type, data=pdata)
     log.info("Dumping %s to '%s'" % (item_type, dump_path))
 
