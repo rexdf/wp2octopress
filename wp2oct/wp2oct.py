@@ -585,11 +585,11 @@ def dump_item(data):
 
     # Post title
     transf = CConvert()
-    name = romkan.to_roma(transf.convert(data.get('title', '').strip()))
+    name = data.get('title', '').strip()
     field = FIELD_MAP.get('title', 'title')
     pdata[field] = name or data.get('post_id', UNTITLED)
 
-    
+
     dump_path = get_path(item_type, data=pdata)
     log.info("Dumping %s to '%s'" % (item_type, dump_path))
 
