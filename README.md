@@ -9,7 +9,7 @@ A python script to convert Wordpress XML dump to a set of plain text/[markdown](
 	pip install -e git+git://github.com/rexdf/wp2octopress#egg=wp2oct
 	wget --no-check-certificate https://raw.github.com/rexdf/wp2octopress/master/wp2oct/convert-utf-8.txt
 	wp2oct rexdf.wordpress.2014-01-29.xml
-然后复制post目录里面的到source/_post/目录下面。rake generate 可能还有极少少部分报错。具体参考我的[博客](http://i.rexdf.org/blog/2014/01/30/qian-yi-wordpressbo-wen-dao-octopress/)。
+然后复制post目录里面的到source/_post/目录下面。`rake generate` 可能还有极少少部分报错。具体参考我的[博客](http://i.rexdf.org/blog/2014/01/30/qian-yi-wordpressbo-wen-dao-octopress/)。
 
 ## Installation
 
@@ -17,7 +17,7 @@ The script could be installed by command:
 
 	pip install -e git+git://github.com/rexdf/wp2octopress#egg=wp2oct
 
-It will install wp2md and the following dependencies:
+It will install wp2octopress and the following dependencies:
 
 * [html2text](https://github.com/aaronsw/html2text/)
 * [python-markdown](http://pypi.python.org/pypi/Markdown/)
@@ -29,7 +29,7 @@ It will install wp2md and the following dependencies:
 
 ![Wordpress content export](http://img-fotki.yandex.ru/get/6403/988666.0/0_a05db_af845b23_L.jpg)
 
-Then wget convert-utf-8.txt for Chinese to pinyin ( It is what octopress does when you type rake new_post["新博客"] ) 
+Then wget convert-utf-8.txt for Chinese to pinyin ( It is what octopress does when you type `rake new_post["新博客"]` ) 
 
 	wget --no-check-certificate https://raw.github.com/rexdf/wp2octopress/master/wp2oct/convert-utf-8.txt
 **If you donnot need Chinese the ignore it,And type following in where the wordpress.xml is:**
