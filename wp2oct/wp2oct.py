@@ -38,14 +38,14 @@ WHAT2SAVE = {
     'item': [
         'post_type',
         'title',
-        #'link',
-        #'creator',
-        #'description',
-        #'post_id',
+        'link',
+        'creator',
+        'description',
+        'post_id',
         'post_date',
-        #'post_date_gmt',
+        'post_date_gmt',
         'comment_status',
-        #'post_name',
+        'post_name',
         'status',
         'excerpt',
         'content',              # Generated: item content
@@ -161,9 +161,9 @@ class CConvert:
 # Wordpress RSS items to public-static page header fields mapping
 # (undefined names will remain unchanged)
 FIELD_MAP = {
-    #'creator': 'author',
+    'creator': 'author',
     'post_date': 'date',
-    #'post_date_gmt': 'created_gmt',
+    'post_date_gmt': 'created_gmt',
     'post_type': 'layout',
     'comment_status': 'comments',
 }
@@ -192,6 +192,7 @@ def init():
         'dump_path': args.d,
         'page_path': args.pg,
         'post_path': args.ps,
+        'private_path': args.rs,
         'draft_path': args.dr,
         'verbose': args.v,
         'parse_date_fmt': args.u,
@@ -314,6 +315,12 @@ def parse_args():
         default=os.path.join("posts", "{year}-{month}-{day}-{name}.md"),
         help='post files path (see docs for variable names)')
     parser.add_argument(
+        '-rs',
+        action='store',
+        metavar='PATH',
+        default=os.path.join("privates", "{year}-{month}-{day}-{name}.md"),
+        help='private post files path (see docs for variable names)')
+    parser.add_argument(
         '-pg',
         action='store',
         metavar='PATH',
@@ -379,6 +386,8 @@ def get_path_fmt(item_type, data):
 
     if data.get('status', None).lower() == 'draft':
         return conf['draft_path']
+    elif data.get('status', None).lower() == 'private':
+        return conf['private_path']
     is_post = item_type == 'post'
     return conf['post_path'] if is_post else conf['page_path']
 
@@ -599,12 +608,13 @@ def dump(file_name, data, order):
                 if field in ['content', 'comments', 'excerpt']:
                     # Fields for non-standard processing
                     extras[field] = data[field]
-                else:
+                elif field in ['layout','title','date','comments','status','categories']:
                     if type(data[field]) == time.struct_time:
                         value = time.strftime(conf['page_date_fmt'], data[field])
                     else:
                         value = data[field] or ''
                     if(str_t(field)=="title"):
+                        #value = data['post_name'] or ''
                         value = value.replace('"',"\\\"")
                         value = "\"" + value + "\""
                     if(str_t(field)=="status"):
@@ -727,7 +737,7 @@ class CustomParser:
 
     def store_item_info(self):
         post_type = self.item.get('post_type', '').lower()
-        if not post_type in ['post', 'page']:
+        if not post_type in ['post', 'page','private']:
             return
 
         fields = [

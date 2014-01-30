@@ -72,6 +72,7 @@ Use `--help` parameter to see the complete list of command line options:
 	  -n LEN      post name (slug) length limit for file naming
 	  -r          generate reference links instead of inline
 	  -ps PATH    post files path (see docs for variable names)
+	  -rs PATH    private post files path (see docs for variable names)
 	  -pg PATH    page files path
 	  -dr PATH    draft files path
 	  -url        keep absolute URLs in hrefs and image srcs
