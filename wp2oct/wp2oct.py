@@ -633,7 +633,9 @@ def dump(file_name, data, order):
 
                 comments = generate_comments(extras.get('comments', []))
                 extras = filter(None, [excerpt, content, comments])
-                f.write('\n' + '\n\n'.join(extras))
+                main_content = '\n' + '\n\n'.join(extras)
+                main_content = main_content.replace("{{","{ {")
+                f.write(main_content)
 
     except Exception as e:
         log.error("Error saving data to '%s'" % (file_name))
